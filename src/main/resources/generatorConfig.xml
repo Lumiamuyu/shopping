@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="application.properties"/>
+    <classPathEntry location="${db.mysql.location}"/>
+    <context id="context" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+        <commentGenerator>
+            <property name="suppressAllCommeents" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <!--数据源配置-->
+        <jdbcConnection driverClass="${spring.datasource.druid.driver-class-name}" connectionURL="${spring.datasource.druid.url}"
+                        userId="${spring.datasource.druid.username}"
+                        password="${spring.datasource.druid.password}"/>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--pojo实体类 包路径-->
+        <javaModelGenerator targetPackage="com.lumiamuyu.shopping.pojo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--mapper.xml包路径-->
+        <sqlMapGenerator targetPackage="com.lumiamuyu.shopping.mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!--mapper包路径-->
+        <javaClientGenerator targetPackage="com.lumiamuyu.shopping.dao" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+
+        <!--表配置，tableName支持%，表示全部生成-->
+        <table tableName="sxy_cart" domainObjectName="Cart" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sxy_category" domainObjectName="Category" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sxy_order" domainObjectName="Order" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sxy_order_item" domainObjectName="OrderItem" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sxy_pay_info" domainObjectName="PayInfo" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sxy_product" domainObjectName="Product" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sxy_shipping" domainObjectName="Shipping" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sxy_user" domainObjectName="User" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+    </context>
+</generatorConfiguration>
