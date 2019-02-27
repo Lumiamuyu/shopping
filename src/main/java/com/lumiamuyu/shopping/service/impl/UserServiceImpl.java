@@ -148,5 +148,87 @@ public class UserServiceImpl implements IUserService {
         }
         return ServerResponse.serverResponseByError("修改失败");    }
 
+    @Override
+    public ServerResponse check_valid(String str, String type) {
+
+        //1.非空校验
+        if (str == null || str.equals("")) {
+            return ServerResponse.serverResponseByError("用户名或邮箱不能为空");
+        }
+        if (type == null || type.equals("")) {
+            return ServerResponse.serverResponseByError("校验的类型不能为空");
+        }
+        //2.类型判断
+        if (type.equals("username")) {
+            int result = userMapper.checkUsername(str);
+            if (result > 0) {
+                return ServerResponse.serverResponseByError("用户名已存在");
+            } else {
+                return ServerResponse.serverResponseBySuccess();
+            }
+        } else if (type.equals("email")) {
+            int result = userMapper.checkEmail(str);
+            if (result > 0) {
+                return ServerResponse.serverResponseByError("邮箱已存在");
+            } else {
+                return ServerResponse.serverResponseBySuccess();
+            }
+        } else {
+            //3.返回结果
+            return ServerResponse.serverResponseByError("参数类型错误");
+        }
+    }
+
+
+    /**
+     * 登录状态下重置密码
+     * */
+    @Override
+    public ServerResponse reset_password(String username, String passwordOld, String passwordNew) {
+        //1.校验参数非空
+        if (passwordOld == null || passwordOld.equals("")){
+            return ServerResponse.serverResponseByError("旧密码不能为空");
+        }
+        if (passwordNew == null || passwordNew.equals("")){
+            return ServerResponse.serverResponseByError("新密码不能为空");
+        }
+        //2.根据用户名和密码查询用户信息
+        User userInfo = userMapper.selectUserInfoByUsernameAndPassword(username,MD5Utils.getMD5Code(passwordOld));
+        if (userInfo == null){
+            return ServerResponse.serverResponseByError("旧密码不正确");
+        }
+        userInfo.setPassword(MD5Utils.getMD5Code(passwordNew));
+        int result = userMapper.updatePasswordByPasswordOld(userInfo);
+        if (result > 0){
+            return ServerResponse.serverResponseBySuccess();
+        }
+        return ServerResponse.serverResponseByError("重置密码失败");
+    }
+
+
+    /**
+     * 登陆状态下更新个人信息
+     * */
+
+    @Override
+    public ServerResponse update_information(User userInfo) {
+        //1.参数非空校验
+        if (userInfo == null){
+            return ServerResponse.serverResponseByError("参数不能为空");
+        }
+        //2.更新用户信息
+        int result = userMapper.updateUserBySelectActive(userInfo);
+        if (result > 0){
+            return ServerResponse.serverResponseBySuccess("更新成功");
+        }
+        return ServerResponse.serverResponseByError("更新失败");
+    }
+
+    @Override
+    public User selectUserInfoByUserId(User userInfo) {
+        User userInfo1 = userMapper.selectByPrimaryKey(userInfo.getId());
+        return userInfo1;
+    }
+
 
 }
