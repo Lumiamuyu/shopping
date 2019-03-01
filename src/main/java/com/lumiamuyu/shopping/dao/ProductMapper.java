@@ -2,8 +2,11 @@ package com.lumiamuyu.shopping.dao;
 
 import com.lumiamuyu.shopping.pojo.Product;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
+
 @Mapper
 public interface ProductMapper {
     /**
@@ -45,4 +48,28 @@ public interface ProductMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(Product record);
+
+    /**
+     * 产品上下架
+     * 更新产品状态
+     * */
+    int updateProductKeySelective(Product product);
+
+    /**
+     * 按照productId、productName进行商品查询
+     * */
+    List<Product> findProductByProductIdAndProductName(@Param("productId") Integer productId,
+                                                       @Param("productName") String productName);
+
+    /**
+     * 前台-根据keyword模糊查询商品
+     * */
+    List<Product> searchProduct(@Param("integerSet") Set<Integer> integerSet,
+                                @Param("keyword") String keyword);
+
+    /**
+     * 根据productId查询product
+     * */
+    Product findByProductId(Integer productId);
+
 }
