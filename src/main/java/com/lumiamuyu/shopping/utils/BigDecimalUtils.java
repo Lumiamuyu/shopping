@@ -7,6 +7,16 @@ import java.math.BigDecimal;
  * */
 public class BigDecimalUtils {
 
+
+    /**
+     * 加法运算2
+     * */
+    public static BigDecimal add(BigDecimal d1,BigDecimal d2) {
+        BigDecimal b1 = new BigDecimal(String.valueOf(d1));
+        BigDecimal b2 = new BigDecimal(String.valueOf(d2));
+        return b1.add(b2);
+    }
+
     /**
      * 加法运算
      * */

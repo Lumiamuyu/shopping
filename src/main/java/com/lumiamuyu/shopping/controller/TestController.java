@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Random;
 
 @RestController
 public class TestController {
@@ -26,6 +27,10 @@ public class TestController {
         user.setId(1);
         user.setUsername("ssds");
         return user;
+
+
+
     }
+
 
 }
