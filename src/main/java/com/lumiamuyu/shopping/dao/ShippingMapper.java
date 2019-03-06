@@ -2,6 +2,7 @@ package com.lumiamuyu.shopping.dao;
 
 import com.lumiamuyu.shopping.pojo.Shipping;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @Mapper
@@ -45,4 +46,21 @@ public interface ShippingMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(Shipping record);
+
+    /**
+     * 删除地址
+     * */
+    int deleteAddressByUserIdAndShoppingId(@Param("userId") Integer userId,
+                                           @Param("shoppingId") Integer shoppingId);
+
+    /**
+     * 登录状态更新地址
+     * */
+    int updateBySelectiveKey(Shipping shipping);
+
+    /**
+     * 根据用户id查询该用户的地址列表
+     * */
+    List<Shipping> selectShippingListByUserId(Integer userId);
+
 }
